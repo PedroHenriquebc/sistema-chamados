@@ -26,6 +26,13 @@
                 <td class="py-2 px-4 border">
                     <a href="{{ route('chamados.show', $chamado) }}" class="text-blue-500">Ver</a>
                     <a href="{{ route('chamados.edit', $chamado) }}" class="text-green-500">Editar</a>
+                    <form action="{{ route('chamados.destroy', $chamado) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-500" onclick="return confirm('Tem certeza que deseja excluir este chamado?')">
+                            Excluir
+                        </button>
+                    </form>
                 </td>
             </tr>
             @endforeach

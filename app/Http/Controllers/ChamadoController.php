@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Categoria;
+use App\Models\Chamado;
 
 class ChamadoController extends Controller
 {
@@ -48,38 +49,82 @@ class ChamadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validação dos dados enviados
+        $data = $request->validate([
+            'titulo'      => 'required|string|max:255',
+            'descricao'   => 'required|string',
+            'categoria_id'=> 'required|exists:categorias,id',
+        ]);
+
+        // Adiciona o usuário autenticado e a data de abertura
+        $data['usuario_id']    = Auth::id();
+        //auth()->id();
+        $data['data_abertura'] = now();
+
+        // Cria o chamado
+        Chamado::create($data);
+
+        // Redireciona para a listagem com mensagem de sucesso
+        return redirect()->route('chamados.index')
+                         ->with('success', 'Chamado criado com sucesso!');
     }
 
     /**
-     * Display the specified resource.
+     * Exibe os detalhes de um chamado.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $chamado = Chamado::findOrFail($id);
+
+        return view('chamados.show', compact('chamado'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Exibe o formulário para editar um chamado.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $chamado = Chamado::findOrFail($id);
+        // Busca todas as categorias para o dropdown de seleção
+        $categorias = Categoria::all();
+
+        return view('chamados.edit', compact('chamado', 'categorias'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualiza os dados de um chamado.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $chamado = Chamado::findOrFail($id);
+
+        // Validação dos dados enviados
+        $data = $request->validate([
+            'titulo'      => 'required|string|max:255',
+            'descricao'   => 'required|string',
+            'categoria_id'=> 'required|exists:categorias,id',
+        ]);
+
+        // Atualiza o chamado
+        $chamado->update($data);
+
+        // Redireciona para a listagem com mensagem de sucesso
+        return redirect()->route('chamados.index')
+                         ->with('success', 'Chamado atualizado com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $chamado = Chamado::findOrFail($id);
+
+        // Exclui o chamado
+        $chamado->delete();
+
+        // Redireciona para a listagem com uma mensagem de sucesso
+        return redirect()->route('chamados.index')
+                        ->with('success', 'Chamado excluído com sucesso!');
     }
 }
