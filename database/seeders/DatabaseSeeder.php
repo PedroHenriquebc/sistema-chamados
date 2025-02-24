@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
     $this->call([
         PerfilSeeder::class,
         UsuarioSeeder::class,
+        ChamadoSeeder::class,
+        CategoriaSeeder::class,
         // Adicione outros seeders se houver, como CategoriaSeeder e ChamadoSeeder
     ]);
 }

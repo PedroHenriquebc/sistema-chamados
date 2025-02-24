@@ -16,8 +16,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        // return view('profile.edit', [
+        //     'user' => $request->user(),
+        // ]);
+        $user = $request->user()->load('perfil'); // Carrega o perfil junto com o usuário
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user, // Passa o usuário com o perfil carregado para a view
         ]);
     }
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('descricao');
+            $table->foreignId('status_id')->default(1)->constrained('statuses');
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade'); // Requerente
             $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
             $table->date('data_abertura')->default(now());

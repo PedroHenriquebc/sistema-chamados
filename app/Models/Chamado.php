@@ -36,4 +36,9 @@ class Chamado extends Model
         }
         return null;
     }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Categoria;
 use App\Models\Chamado;
+use App\Models\Status;
 
 class ChamadoController extends Controller
 {
@@ -56,10 +57,14 @@ class ChamadoController extends Controller
             'categoria_id'=> 'required|exists:categorias,id',
         ]);
 
+        $statusAberto = Status::where('nome', 'Aberto')->firstOrFail();
+
         // Adiciona o usuário autenticado e a data de abertura
         $data['usuario_id']    = Auth::id();
         //auth()->id();
         $data['data_abertura'] = now();
+
+        $data['status_id'] = $statusAberto->id;
 
         // Cria o chamado
         Chamado::create($data);
@@ -87,31 +92,44 @@ class ChamadoController extends Controller
         $chamado = Chamado::findOrFail($id);
         // Busca todas as categorias para o dropdown de seleção
         $categorias = Categoria::all();
+        $statuses = Status::all(); // Buscar todos os status
 
-        return view('chamados.edit', compact('chamado', 'categorias'));
+        return view('chamados.edit', compact('chamado', 'categorias', 'statuses'));
     }
 
     /**
      * Atualiza os dados de um chamado.
      */
     public function update(Request $request, $id)
-    {
-        $chamado = Chamado::findOrFail($id);
+{
+    $chamado = Chamado::findOrFail($id);
 
-        // Validação dos dados enviados
-        $data = $request->validate([
-            'titulo'      => 'required|string|max:255',
-            'descricao'   => 'required|string',
-            'categoria_id'=> 'required|exists:categorias,id',
-        ]);
+    $data = $request->validate([
+        'titulo'      => 'required|string|max:255',
+        'descricao'   => 'required|string',
+        'categoria_id'=> 'required|exists:categorias,id',
+        'status_id'   => 'required|exists:statuses,id',
+    ]);
 
-        // Atualiza o chamado
-        $chamado->update($data);
+    // Verifica se o status foi alterado para "Em Desenvolvimento"
+    if ($chamado->status_id != $request->status_id) {
+        $status = Status::find($request->status_id);
 
-        // Redireciona para a listagem com mensagem de sucesso
-        return redirect()->route('chamados.index')
-                         ->with('success', 'Chamado atualizado com sucesso!');
+        if ($status->nome == 'Em Desenvolvimento' && is_null($chamado->data_inicio_desenvolvimento)) {
+            $data['data_inicio_desenvolvimento'] = now();
+        }
+
+        if ($status->nome == 'Fechado' && is_null($chamado->data_fechamento)) {
+            $data['data_fechamento'] = now();
+        }
     }
+
+    $chamado->update($data);
+
+    return redirect()->route('chamados.index')->with('success', 'Chamado atualizado com sucesso!');
+}
+
+
 
     /**
      * Remove the specified resource from storage.
