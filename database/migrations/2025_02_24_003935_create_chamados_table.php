@@ -18,9 +18,9 @@ return new class extends Migration
             $table->foreignId('status_id')->default(1)->constrained('statuses');
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade'); // Requerente
             $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
-            $table->date('data_abertura')->default(now());
-            $table->date('data_inicio_desenvolvimento')->nullable();
-            $table->date('data_fechamento')->nullable();
+            $table->timestamp('data_abertura')->default(now());
+            $table->timestamp('data_inicio_desenvolvimento')->nullable();
+            $table->timestamp('data_fechamento')->nullable();
             $table->timestamps();
         });
     }
