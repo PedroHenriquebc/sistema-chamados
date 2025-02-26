@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+<div class="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md mt-5">
     <h1 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200 text-center">Editar Chamado</h1>
 
     <form action="{{ route('chamados.update', $chamado) }}" method="POST">

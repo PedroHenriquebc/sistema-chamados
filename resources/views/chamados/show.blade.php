@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
+<div class="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg mt-5">
     <h1 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100 text-center">Detalhes do Chamado</h1>
 
     <div class="space-y-4">

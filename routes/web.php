@@ -9,8 +9,9 @@ use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\StatusController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -11,7 +11,7 @@ class Chamado extends Model
 
     protected $fillable = [
         'titulo', 'descricao', 'usuario_id', 'categoria_id',
-        'data_abertura', 'data_inicio_desenvolvimento', 'data_fechamento'
+        'data_abertura', 'data_inicio_desenvolvimento', 'data_fechamento', 'status_id'
     ];
 
     public function usuario()
