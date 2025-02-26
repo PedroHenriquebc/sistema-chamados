@@ -85,5 +85,15 @@
             </table>
         </div>
     </div>
+    @if(session('error'))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "{{ session('error') }}",
+        });
+    </script>
+    @endif
     @endsection
 </x-app-layout>

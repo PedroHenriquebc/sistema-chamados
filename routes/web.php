@@ -7,11 +7,15 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\StatusController;
+use App\Http\Middleware\IsAdmin;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::middleware(['auth', IsAdmin::class])->group(function () {
+    Route::resource('categorias', CategoriaController::class);
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -22,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('chamados', ChamadoController::class);
-    Route::resource('categorias', CategoriaController::class);
+    // Route::resource('categorias', CategoriaController::class);
     Route::resource('chamadosp', PerfilController::class);
     Route::resource('status', StatusController::class);
     // Route::resource('perfischamado', PerfilController::class)->parameters([
