@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         UsuarioSeeder::class,
         ChamadoSeeder::class,
         CategoriaSeeder::class,
+        StatusSeeder::class,
         // Adicione outros seeders se houver, como CategoriaSeeder e ChamadoSeeder
     ]);
 }
