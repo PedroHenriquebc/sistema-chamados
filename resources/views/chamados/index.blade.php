@@ -13,20 +13,23 @@
         <h1 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100 text-center">Lista de Chamados</h1>
 
         <div class="overflow-x-auto">
-            @if(auth()->user()->perfil_id == 1)
+
+
             <div class="mb-4 flex justify-between">
             <a href="{{ route('chamados.create') }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500">
-                        Novo Chamado
-                    </a>
+                Novo Chamado
+            </a>
+            @if(auth()->user()->perfil_id == 1)
                 <a href="{{ route('categorias.index') }}" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-500">
                     Categorias
                </a>
                 <!--  <a href="{{ route('chamadosp.index') }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500">
                     Perfis
                 </a> -->
+                @endif
             </div>
 
-            @endif
+
             <table class="w-full border-collapse border border-gray-300 dark:border-gray-700">
                 <thead class="bg-gray-200 dark:bg-gray-700">
                     <tr>

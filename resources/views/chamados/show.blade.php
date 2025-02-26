@@ -31,12 +31,13 @@
     </div>
 
     <div class="mt-6 space-x-2 flex justify-center">
+         <a href="{{ route('chamados.edit', $chamado) }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500">
+            Editar
+        </a>
         <a href="{{ route('chamados.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-500">
             Voltar
         </a>
-        <a href="{{ route('chamados.edit', $chamado) }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500">
-            Editar
-        </a>
+
     </div>
 </div>
 @endsection
