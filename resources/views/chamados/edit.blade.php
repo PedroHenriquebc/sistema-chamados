@@ -10,6 +10,7 @@
 
         @php
             $isDisabled = auth()->user()->perfil->nome === 'Comum' && auth()->id() !== $chamado->usuario_id;
+            $isJustCommom = auth()->user()->perfil->nome === 'Comum';
         @endphp
 
         <div class="mb-4">
@@ -42,8 +43,8 @@
         <div class="mb-4">
             <label class="block text-gray-700 dark:text-gray-200">Status</label>
             <select name="status_id" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white
-                @if($isDisabled) cursor-not-allowed bg-gray-300 text-gray-500 @endif"
-                @if($isDisabled) disabled @endif>
+                @if($isJustCommom) cursor-not-allowed bg-gray-300 text-gray-500 @endif"
+                @if($isJustCommom) disabled @endif>
                 @foreach($statuses as $status)
                     <option value="{{ $status->id }}" {{ $chamado->status_id == $status->id ? 'selected' : '' }}>
                         {{ $status->nome }}
