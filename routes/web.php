@@ -16,6 +16,7 @@ Route::get('/', function () {
 Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::resource('categorias', CategoriaController::class);
     Route::resource('perfis', PerfilController::class);
+    Route::resource('usuarios', UsuarioController::class);
 });
 
 Route::get('/dashboard', function () {
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('chamados', ChamadoController::class);
     Route::resource('status', StatusController::class);
+
     // Route::resource('perfis', PerfilController::class);
     // Route::resource('categorias', CategoriaController::class);
 
