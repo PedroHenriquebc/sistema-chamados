@@ -1,14 +1,15 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Lista de Chamados') }}
-        </h2>
-        <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
-            Bem-vindo, <strong>{{ auth()->user()->nome }}</strong>! <!-- Exibe o nome do usuário logado -->
-        </p>
-    </x-slot>
-
     @section('content')
+    @if(session('success'))
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: "{{ session('success') }}",
+            });
+        </script>
+    @endif
     <div class="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg mt-5">
         <h1 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100 text-center">Lista de Chamados</h1>
 
