@@ -1,21 +1,10 @@
 <x-app-layout>
     @section('content')
-    @if(session('success'))
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Sucesso!',
-                text: "{{ session('success') }}",
-            });
-        </script>
-    @endif
+
     <div class="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg mt-5">
         <h1 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100 text-center">Lista de Chamados</h1>
 
         <div class="overflow-x-auto">
-
-
             <div class="mb-4 flex justify-between">
             <a href="{{ route('chamados.create') }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500">
                 Novo Chamado
@@ -24,9 +13,10 @@
                 <a href="{{ route('categorias.index') }}" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-500">
                     Categorias
                </a>
-                <!--  <a href="{{ route('chamadosp.index') }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500">
+               <a href="{{ route('perfis.index') }}" class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-500">
                     Perfis
-                </a> -->
+               </a>
+
                 @endif
             </div>
 

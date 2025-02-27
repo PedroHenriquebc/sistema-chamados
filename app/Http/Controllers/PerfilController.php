@@ -7,26 +7,26 @@ use Illuminate\Http\Request;
 
 class PerfilController extends Controller
 {
-    // Construtor para middleware de autenticação
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-
-    // Exibe a lista de perfis
+    /**
+     * Exibe a lista de perfis.
+     */
     public function index()
     {
         $perfis = Perfil::all();
-        return view('chamadosp.index', compact('perfis'));
+        return view('perfis.index', compact('perfis'));
     }
 
-    // Mostra o formulário para criar um novo perfil
+    /**
+     * Mostra o formulário de criação de perfil.
+     */
     public function create()
     {
-        return view('chamadosp.create');
+        return view('perfis.create');
     }
 
-    // Armazena o novo perfil no banco
+    /**
+     * Armazena um novo perfil no banco de dados.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -35,38 +35,50 @@ class PerfilController extends Controller
 
         Perfil::create($request->all());
 
-        return redirect()->route('chamadosp.index')->with('success', 'Perfil criado com sucesso!');
+        return redirect()->route('perfis.index')->with('success', 'Perfil criado com sucesso!');
     }
 
-    // Exibe os detalhes de um perfil específico
-    public function show(Perfil $perfil)
+    /**
+     * Exibe um perfil específico.
+     */
+    public function show($id)
     {
-        return view('chamadosp.show', compact('perfil'));
+        $perfil = Perfil::findOrFail($id);
+        return view('perfis.show', compact('perfil'));
     }
 
-    // Mostra o formulário para editar um perfil
-    public function edit(Perfil $perfil)
+    /**
+     * Mostra o formulário de edição de um perfil.
+     */
+    public function edit($id)
     {
-        return view('chamadosp.edit', compact('perfil'));
+        $perfil = Perfil::findOrFail($id);
+
+        return view('perfis.edit', compact('perfil'));
     }
 
-    // Atualiza um perfil no banco
-    public function update(Request $request, Perfil $perfil)
+    /**
+     * Atualiza um perfil no banco de dados.
+     */
+    public function update(Request $request, $id)
     {
-        $request->validate([
+        $data = $request->validate([
             'nome' => 'required|string|max:255',
         ]);
 
-        $perfil->update($request->all());
+        $perfil = Perfil::findOrFail($id);
+        $perfil->update($data);
 
-        return redirect()->route('chamadosp.index')->with('success', 'Perfil atualizado com sucesso!');
+        return redirect()->route('perfis.index')->with('success', 'Perfil atualizado com sucesso!');
     }
 
-    // Remove um perfil do banco
-    public function destroy(Perfil $perfil)
+    /**
+     * Remove um perfil do banco de dados.
+     */
+    public function destroy($id)
     {
+        $perfil = Perfil::findOrFail($id);
         $perfil->delete();
-
-        return redirect()->route('chamadosp.index')->with('success', 'Perfil excluído com sucesso!');
+        return redirect()->route('perfis.index')->with('success', 'Perfil deletado com sucesso!');
     }
 }

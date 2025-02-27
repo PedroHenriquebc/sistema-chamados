@@ -6,7 +6,7 @@
             {{ __('Abrir') }}
         </h2>
     </x-slot>
-<div class="flex justify-center items-center  p-4">
+<div class="flex justify-center items-center p-4">
     <div class="w-full max-w-3xl bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
         <h1 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200 text-center">Abrir Chamado</h1>
 
