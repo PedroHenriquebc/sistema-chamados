@@ -3,27 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\Perfil;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
-    // Construtor para middleware de autenticação
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-
     // Exibe a lista de categorias
     public function index()
     {
-        $categorias = Categoria::all();
+        $categorias = Categoria::with('perfil')->get();
         return view('categorias.index', compact('categorias'));
     }
 
     // Mostra o formulário para criar uma nova categoria
     public function create()
     {
-        return view('categorias.create');
+        $perfis = Perfil::all();
+        return view('categorias.create', compact('perfis'));
     }
 
     // Armazena a nova categoria no banco
@@ -31,6 +27,7 @@ class CategoriaController extends Controller
     {
         $request->validate([
             'nome' => 'required|string|max:255',
+            'perfil_id' => 'required|exists:perfis,id',
         ]);
 
         Categoria::create($request->all());
@@ -47,7 +44,8 @@ class CategoriaController extends Controller
     // Mostra o formulário para editar uma categoria
     public function edit(Categoria $categoria)
     {
-        return view('categorias.edit', compact('categoria'));
+        $perfis = Perfil::all();
+        return view('categorias.edit', compact('categoria', 'perfis'));
     }
 
     // Atualiza uma categoria no banco
@@ -55,6 +53,7 @@ class CategoriaController extends Controller
     {
         $request->validate([
             'nome' => 'required|string|max:255',
+            'perfil_id' => 'required|exists:perfis,id',
         ]);
 
         $categoria->update($request->all());

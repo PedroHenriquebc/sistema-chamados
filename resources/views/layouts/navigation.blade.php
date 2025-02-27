@@ -12,9 +12,10 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('chamados.index')" :active="request()->routeIs('dashboard')">
-                        {{ __('Sistema de Chamados') }}
-                    </x-nav-link>
+                <x-nav-link :href="route('chamados.index')" :active="request()->routeIs('dashboard')" class="text-[18px] font-bold">
+                    {{ __('Sistema de Chamados') }}
+                </x-nav-link>
+
                 </div>
 
             </div>
