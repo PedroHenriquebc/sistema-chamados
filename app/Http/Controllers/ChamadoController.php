@@ -15,21 +15,19 @@ class ChamadoController extends Controller
      */
     public function index()
     {
-        // $user = auth()->user();
-        $user = Auth::user();
+        $user = Auth::user(); // Obtém o usuário logado
 
-        // Lógica para filtrar os chamados de acordo com o perfil do usuário
-        if ($user->perfil->nome === 'Admin' || $user->perfil->nome === 'Comum') {
-            // Admin e usuários comuns veem todos os chamados
-            $chamados = \App\Models\Chamado::all();
-        } else {
-            // Para Desenvolvedor ou Infraestrutura, filtra pelo perfil associado à categoria
-            $chamados = \App\Models\Chamado::whereHas('categoria', function ($query) use ($user) {
-                $query->where('perfil_id', $user->perfil_id);
-            })->get();
-        }
+    if ($user->perfil_id == 1 || $user->perfil_id == 4) {
+        // Se for Admin (1) ou Comum (4), exibir todos os chamados
+        $chamados = Chamado::with(['usuario', 'categoria', 'status'])->get();
+    } else {
+        // Para os demais usuários, exibir chamados apenas das categorias com perfil_id igual ao do usuário logado
+        $chamados = Chamado::whereHas('categoria', function ($query) use ($user) {
+            $query->where('perfil_id', $user->perfil_id);
+        })->with(['usuario', 'categoria', 'status'])->get();
+    }
 
-        return view('chamados.index', compact('chamados'));
+    return view('chamados.index', compact('chamados'));
     }
 
 
